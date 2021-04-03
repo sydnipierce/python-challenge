@@ -29,9 +29,13 @@ with open(budget_data_file_path) as budget_csvfile:
         profit_or_loss.append(int(row[1]))
         
     'Calculate the change in profit between each month and create a list'
-    for x in range(1, 87) in profit_or_loss:
-        monthly_change = profit_or_loss[x] - profit_or_loss[x - 1]
+    for range(1, 87) in profit_or_loss:
+        monthly_change = next(profit_or_loss) - profit_or_loss
         profit_change.append(monthly_change)
+
+    'Make profit change list align with end month rather than beginning month'
+    profit_change.insert(0, 0)
+    profit_change.pop(86)
 
     total_months = len(month)
     net_profit = sum(profit_or_loss)
@@ -39,11 +43,22 @@ with open(budget_data_file_path) as budget_csvfile:
     max_profit = max(profit_change)
     max_loss = min(profit_change)
 
-    
+    'Re-zip lists, including new profit change list, into tuple'
+    roster = zip(month, profit_or_loss, profit_change)
 
-    for profit in profit_change:
+    'Write output file path'
+    output_path = os.path.join("Analysis", "budget_data_append.csv")
+
+    'Open output file and create writer'
+    with open(output_path, 'w', newline='') as newcsvfile:
+        newcsvwriter = csv.writer(newcsvfile, delimiter=",")
+        newcsvwriter.writerow = (['Month', 'Profit/Loss', 'Profit Change'])
+        newcsvwriter.writerows(roster)
+
+    for row in newcsvwriter:
         if profit == max_profit:
-
+            max_profit_month = 
 
     print(total_months)
     print(net_profit)
+    print(profit_change)
