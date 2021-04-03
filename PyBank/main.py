@@ -1,13 +1,10 @@
-'Import Modules for working with .csv file'
+'Import Modules'
 import os
 import csv
 import statistics
 
 'Create file path for budget_data.csv file'
 budget_data_file_path = os.path.join('Resources', 'budget_data.csv')
-
-'Write output file path'
-output_path = os.path.join("Analysis", "budget_data_append.csv")
 
 'Write output summary file path'
 text_path = os.path.join("Analysis", "summary.txt")
@@ -40,35 +37,32 @@ with open(budget_data_file_path) as budget_csvfile:
         monthly_change = profit_or_loss[x] - profit_or_loss[x-1]
         profit_change.append(monthly_change)
     
+    'Insert a value for the first month of the profit change list to force alignment of changes with correct month'
     profit_change.insert(0, 0)
 
+    'Calculate core statistics for analysis'
     total_months = len(month)
     net_profit = sum(profit_or_loss)
-    avg_profit_change = statistics.mean(profit_change)
     max_profit = max(profit_change)
     max_loss = min(profit_change)
 
-    'Re-zip lists, including new profit change list, into tuple'
-    roster = zip(month, profit_or_loss, profit_change)
+    'Check that max/min values are correct'
+    'print(max_profit)'
+    'print(max_loss)'
 
-'Open output file and create writer'
-with open(output_path, "w") as newcsvfile:
-    """newcsvwriter = csv.writer(newcsvfile, delimiter=",")
-    
-    newcsvwriter.writerow = (['Month', 'Profit/Loss', 'Profit Change'])
-    newcsvwriter.writerows(roster)
+    'Find index number for max and min profits to locate corresponding months in months list.'
+    max_month_index = profit_change.index(max_profit)
+    min_month_index = profit_change.index(max_loss)
 
-    for row in newcsvwriter:
-        if row[2] == max_profit:
-            max_profit_month = row[0]
-        elif row[2] == max_loss:
-            max_loss_month = row[0]
+    'Locate corresponding months in months list'
+    max_profit_month = month[max_month_index]
+    max_loss_month = month[min_month_index]
 
-    text_path = os.path.join("Analysis", "results.txt")
+    'Remove forced zero value in profit change list to generate correct average value'
+    profit_change.pop(0)
+    avg_profit_change = statistics.mean(profit_change)
 
-    text = open(text_path, "w")
-"""
-
+'Write output to summary txt file'
 with open(text_path, "w") as text:
     
     output = (
@@ -76,10 +70,18 @@ with open(text_path, "w") as text:
     "--------------------\n"
     f"Total Months: {total_months}\n"
     f"Total: ${net_profit}\n"
-    f"Average Change: ${avg_profit_change}"
-    )
-    """f"Greatest Increase in Profits: {max_profit_month} (${max_profit})"
+    f"Average Change: ${avg_profit_change}\n"
+    f"Greatest Increase in Profits: {max_profit_month} (${max_profit})\n"
     f"Greatest Decrease in Profits: {max_loss_month} (${max_loss})"
-    """
+    )
     
     text.write(output)
+
+'Print summary results to terminal'
+print("Financial Analysis")
+print("--------------------")
+print(f"Total Months: {total_months}")
+print(f"Total: ${net_profit}")
+print(f"Average Change: ${avg_profit_change}")
+print(f"Greatest Increase in Profits: {max_profit_month} (${max_profit})")
+print(f"Greatest Decrease in Profits: {max_loss_month} (${max_loss})")

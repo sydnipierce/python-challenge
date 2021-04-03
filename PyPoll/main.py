@@ -35,6 +35,12 @@ with open(election_data_file_path) as election_csvfile:
 
         if row[2] == "Khan":
             khan_count = khan_count + 1
+        elif row[2] == "Li":
+            li_count += 1
+        elif row[2] == "Correy":
+            correy_count += 1
+        elif candidate == "O'Tooley":
+            otooley_count += 1
 
     for x in range(5):
         print(voters[x])
@@ -47,18 +53,6 @@ with open(election_data_file_path) as election_csvfile:
 
     total_votes = len(voters)
     print(total_votes)
-
-    for row in csvreader:
-        if row[2] == "Khan":
-            khan_count = khan_count + 1
-        elif row[2] == "Li":
-            li_count += 1
-        elif row[2] == "Correy":
-            correy_count += 1
-        elif candidate == "O'Tooley":
-            otooley_count += 1
-    
-        print(candidate)
 
     khan_percent = khan_count / total_votes
     li_percent = li_count / total_votes
