@@ -11,6 +11,9 @@ otooley_count = 0
 'Create file path for election_data.csv file'
 election_data_file_path = os.path.join('Resources', 'election_data.csv')
 
+'Write output summary file path'
+text_path = os.path.join("Analysis", "summary.txt")
+
 'While the election_data.csv file is open, do the following:'
 with open(election_data_file_path) as election_csvfile:
 
@@ -39,7 +42,7 @@ with open(election_data_file_path) as election_csvfile:
             li_count += 1
         elif row[2] == "Correy":
             correy_count += 1
-        elif candidate == "O'Tooley":
+        elif row[2] == "O'Tooley":
             otooley_count += 1
 
     for x in range(5):
@@ -54,10 +57,10 @@ with open(election_data_file_path) as election_csvfile:
     total_votes = len(voters)
     print(total_votes)
 
-    khan_percent = khan_count / total_votes
-    li_percent = li_count / total_votes
-    correy_percent = correy_count / total_votes
-    otooley_percent = otooley_count / total_votes
+    khan_percent = (khan_count / total_votes) * 100
+    li_percent = (li_count / total_votes) * 100
+    correy_percent = (correy_count / total_votes) * 100
+    otooley_percent = (otooley_count / total_votes) * 100
 
     print(khan_count)
     print(li_count)
@@ -74,3 +77,33 @@ with open(election_data_file_path) as election_csvfile:
         winner = "O'Tooley"
     else:
         winner = "None"
+
+'Print results to summary .txt file'
+with open(text_path, "w") as text:
+    
+    output = (
+    "Election Results\n"
+    "--------------------\n"
+    f"Total Votes: {total_votes}\n"
+    "--------------------\n"
+    f"Khan: {khan_percent}% ({khan_count})\n"
+    f"Li: {li_percent}% ({li_count})\n"
+    f"Correy: {correy_percent}% ({correy_count})\n"
+    f"O'Tooley: {otooley_percent}% ({otooley_count})\n"
+    "--------------------\n"
+    f"Winner: {winner}"
+    )
+    
+    text.write(output)
+
+'Print summary results to terminal'
+print("Election Results")
+print("--------------------")
+print(f"Total Votes: {total_votes}")
+print("--------------------")
+print(f"Khan: {khan_percent}% ({khan_count})")
+print(f"Li: {li_percent}% ({li_count})")
+print(f"Correy: {correy_percent}% ({correy_count})")
+print(f"O'Tooley: {otooley_percent}% ({otooley_count})")
+print("--------------------")
+print(f"Winner: {winner}")
