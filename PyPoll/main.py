@@ -1,6 +1,7 @@
 'Import Modules for working with .csv file'
 import os
 import csv
+import pandas as pd
 
 'Create file path for election_data.csv file'
 election_data_file_path = os.path.join('Resources', 'election_data.csv')
@@ -31,3 +32,12 @@ with open(election_data_file_path) as election_csvfile:
     candidates_set = set(candidates)
     unique_candidates = list(candidates_set)
     print(unique_candidates)
+
+    khan_count = 0
+    li_count = 0
+    correy_count = 0
+    otooley_count = 0
+
+    for row in csvreader:
+        if row[2] == candidates_set[0]:
+            khan_count = khan_count 
