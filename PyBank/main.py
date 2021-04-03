@@ -15,10 +15,19 @@ with open(budget_data_file_path) as budget_csvfile:
     'for row in csvreader:'
     'print(row)'
     
-    'Find the length of the Date column'
+    'Create empty lists to collect .csv column data'
+    month = []
+    profit_or_loss = []
+
+    'Find the number of records in the table'
     header = next(csvreader)
     total_months = 0
     for row in csvreader:
         total_months = total_months + 1
+        month.append(row[0])
+        profit_or_loss.append(row[1])
+
+    net_profit = sum(profit_or_loss)
 
     print(total_months)
+
